@@ -1,11 +1,15 @@
 LoadModule unixd_module          modules/mod_unixd.so
+LoadModule authn_core_module     modules/mod_authn_core.so
 LoadModule authz_core_module     modules/mod_authz_core.so
+LoadModule authz_user_module     modules/mod_authz_user.so
+LoadModule auth_basic_module     modules/mod_auth_basic.so
 LoadModule log_config_module     modules/mod_log_config.so
 LoadModule autoindex_module      modules/mod_autoindex.so
-LoadModule plugauth_module MODULE_SRC_ROOT/mod_authn_plugauth.so
+LoadModule plugauth_module       MODULE_SRC_ROOT/mod_authn_plugauth.so
 
 Listen 8081
 DocumentRoot MODULE_SRC_ROOT/httpd/root
+PlugAuthURL http://foo/bar/baz
 
 <Location />
   <RequireAll>
@@ -14,8 +18,10 @@ DocumentRoot MODULE_SRC_ROOT/httpd/root
 </Location>
 
 <Location "/private">
-  PlugAuthEnabled on
-  PlugAuthURL http://foo/bar/baz
+  AuthType Basic
+  AuthName "My Server"
+  AuthBasicProvider plugauth
+  Require valid-user
 </Location>
 
 <Directory MODULE_SRC_ROOT/httpd/root>
