@@ -6,3 +6,4 @@
 *.slo
 *.log
 *.pid
+/httpd/conf/httpd.conf

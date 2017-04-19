@@ -48,11 +48,11 @@ static const command_rec plugauth_directives[] =
   { NULL },
 };
 
-static int plugauth_handler(request_rec *r);
+static int plugauth_check_authn(request_rec *r);
 
 static void register_hooks(apr_pool_t *pool)
 {
-  ap_hook_handler(plugauth_handler, NULL, NULL, APR_HOOK_LAST);
+  ap_hook_handler(plugauth_check_authn, NULL, NULL, APR_HOOK_FIRST);
 }
 
 static void *create_dir_config(apr_pool_t *pool, char *context)
@@ -96,7 +96,7 @@ module AP_MODULE_DECLARE_DATA plugauth_module =
   register_hooks       /* Our hook registering function */
 };
 
-static int plugauth_handler(request_rec *r)
+static int plugauth_check_authn(request_rec *r)
 {
   plugauth_config *config = (plugauth_config*) ap_get_module_config(r->per_dir_config, &plugauth_module);
 

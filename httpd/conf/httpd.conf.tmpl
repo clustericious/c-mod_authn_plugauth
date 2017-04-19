@@ -1,0 +1,29 @@
+LoadModule unixd_module          modules/mod_unixd.so
+LoadModule authz_core_module     modules/mod_authz_core.so
+LoadModule log_config_module     modules/mod_log_config.so
+LoadModule autoindex_module      modules/mod_autoindex.so
+LoadModule plugauth_module MODULE_SRC_ROOT/mod_authn_plugauth.so
+
+Listen 8081
+DocumentRoot MODULE_SRC_ROOT/httpd/root
+
+<Location />
+  <RequireAll>
+    Require all granted
+  </RequireAll>
+</Location>
+
+<Location "/private">
+  PlugAuthEnabled on
+  PlugAuthURL http://foo/bar/baz
+</Location>
+
+<Directory MODULE_SRC_ROOT/httpd/root>
+  Options +Indexes
+  IndexOptions FancyIndexing FoldersFirst SuppressIcon
+</Directory>
+
+PidFile MODULE_SRC_ROOT/httpd/var/run/apache.pid
+ErrorLog MODULE_SRC_ROOT/httpd/var/log/apache.error.log
+LogFormat "%h %l %u %t \"%r\" %>s %b" common
+CustomLog MODULE_SRC_ROOT/httpd/var/log/apache.access.log common
