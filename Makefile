@@ -1,9 +1,9 @@
-CFLAGS=-I/usr/local/curl/include
-LIBS  =-L/usr/local/curl/lib -lcurl
+CFLAGS=-I/usr/local/curl/include -Ilibplugauth
+LIBS  =-L/usr/local/curl/lib -lcurl -Llibplugauth -lplugauth
 
-all : mod_authn_plugauth.so libplugauth/libplugauth.so
+all : mod_authn_plugauth.so
 
-mod_authn_plugauth.so : mod_authn_plugauth.c
+mod_authn_plugauth.so : mod_authn_plugauth.c libplugauth/libplugauth.so
 	apxs -i -a -c $(CFLAGS) $(LIBS) mod_authn_plugauth.c
 	mv .libs/mod_authn_plugauth.so .
 	rm -rf .libs

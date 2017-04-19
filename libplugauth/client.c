@@ -34,10 +34,11 @@ plugauth_client_new(const char *url)
     else
       snprintf(self->auth_url, size+6, "%s/auth", url);
       
-    self->my_error  = NULL;
-    self->ex_error  = NULL;
-    self->http_code = 0L;
-    self->auth      = PLUGAUTH_NOTHING;
+    self->my_error   = NULL;
+    self->ex_error   = NULL;
+    self->http_code  = 0L;
+    self->auth       = PLUGAUTH_NOTHING;
+    self->ignore_ssl = 0;
     
   }
   
@@ -62,3 +63,14 @@ const char *plugauth_client_get_auth_url(plugauth_client_t *self)
 {
   return self->auth_url;
 }
+
+int plugauth_client_get_ignore_ssl(plugauth_client_t *self)
+{
+  return self->ignore_ssl;
+}
+
+void plugauth_client_set_ignore_ssl(plugauth_client_t *self, int value)
+{
+  self->ignore_ssl = !!value;
+}
+

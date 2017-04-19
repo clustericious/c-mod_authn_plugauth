@@ -26,13 +26,17 @@ plugauth_client_auth(plugauth_client_t *self, const char *user, const char *pass
     curl_easy_setopt(curl, CURLOPT_VERBOSE,        1L);
     */
 
-    curl_easy_setopt(curl, CURLOPT_URL,            self->auth_url);
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+    curl_easy_setopt(curl, CURLOPT_URL,            self->auth_url);    
     curl_easy_setopt(curl, CURLOPT_NOBODY,         1L);
     curl_easy_setopt(curl, CURLOPT_USERNAME,       user);
     curl_easy_setopt(curl, CURLOPT_PASSWORD,       password);
     curl_easy_setopt(curl, CURLOPT_USERAGENT,      "libplugauth");
+    
+    if(self->ignore_ssl)
+    {
+      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+      curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+    }
     
     res = curl_easy_perform(curl);
     

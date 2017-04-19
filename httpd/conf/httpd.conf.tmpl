@@ -5,11 +5,12 @@ LoadModule authz_user_module     modules/mod_authz_user.so
 LoadModule auth_basic_module     modules/mod_auth_basic.so
 LoadModule log_config_module     modules/mod_log_config.so
 LoadModule autoindex_module      modules/mod_autoindex.so
+LoadModule dir_module            modules/mod_dir.so
 LoadModule plugauth_module       MODULE_SRC_ROOT/mod_authn_plugauth.so
 
 Listen 8081
 DocumentRoot MODULE_SRC_ROOT/httpd/root
-PlugAuthURL http://foo/bar/baz
+PlugAuthURL http://localhost:3001
 
 <Location />
   <RequireAll>
@@ -27,6 +28,7 @@ PlugAuthURL http://foo/bar/baz
 <Directory MODULE_SRC_ROOT/httpd/root>
   Options +Indexes
   IndexOptions FancyIndexing FoldersFirst SuppressIcon
+  DirectoryIndex index.html
 </Directory>
 
 PidFile MODULE_SRC_ROOT/httpd/var/run/apache.pid

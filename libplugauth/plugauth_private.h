@@ -8,7 +8,8 @@ struct _plugauth_client_t
   const char *my_error;
   const char *ex_error;
   long http_code;
-  int  auth;
+  int auth;
+  int ignore_ssl;
   char error[255];
 };
 

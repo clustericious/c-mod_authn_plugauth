@@ -11,6 +11,8 @@ const char *plugauth_client_get_base_url(plugauth_client_t *self);
 const char *plugauth_client_get_auth_url(plugauth_client_t *self);
 int plugauth_client_get_auth(plugauth_client_t *self);
 const char *plugauth_client_get_error(plugauth_client_t *self);
+int plugauth_client_get_ignore_ssl(plugauth_client_t *self);
+void plugauth_client_set_ignore_ssl(plugauth_client_t *self, int value);
 
 int plugauth_client_auth(plugauth_client_t *self, const char *user, const char *password);
 
