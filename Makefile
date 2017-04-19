@@ -1,16 +1,13 @@
-CFLAGS=-I/usr/local/curl/include -Ilibplugauth
-LIBS  =-L/usr/local/curl/lib -lcurl -Llibplugauth -lplugauth
+CFLAGS=-I/util/include
+LIBS  =-L/util/lib -lplugauth
 
 all : mod_authn_plugauth.so
 
-mod_authn_plugauth.so : mod_authn_plugauth.c libplugauth/libplugauth.so
+mod_authn_plugauth.so : mod_authn_plugauth.c
 	apxs -i -a -c $(CFLAGS) $(LIBS) mod_authn_plugauth.c
 	mv .libs/mod_authn_plugauth.so .
 	rm -rf .libs
-	rm -f *.la *.lo *.o *.slo	
-
-libplugauth/libplugauth.so :
-	$(MAKE) -C libplugauth libplugauth.so
+	rm -f *.la *.lo *.o *.slo
 
 httpd/conf/httpd.conf : httpd/conf/httpd.conf.tmpl
 	perl -pe 's/MODULE_SRC_ROOT/$$ENV{PWD}/g' httpd/conf/httpd.conf.tmpl > httpd/conf/httpd.conf
@@ -22,7 +19,6 @@ check : mod_authn_plugauth.so
 	httpd -t -f `pwd`/example.conf
 
 clean:
-	$(MAKE) -C libplugauth clean
 	rm -rf .libs
 	rm -f *.la *.lo *.o *.slo *.so
 	rm -f httpd/conf/httpd.conf
@@ -30,4 +26,4 @@ clean:
 distclean: clean
 	rm -f httpd/var/log/*.log
 	rm -f httpd/var/run/*.pid
-	
+
