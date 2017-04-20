@@ -6,4 +6,6 @@
 *.slo
 *.log
 *.pid
+*.tar.gz
 /httpd/conf/httpd.conf
+/mod_authn_plugauth.spec

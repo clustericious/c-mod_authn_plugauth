@@ -129,7 +129,7 @@ static authn_status authn_plugauth_password(request_rec *r, const char *user, co
   /* return one of: AUTH_GENERAL_ERROR, AUTH_USER_NOT_FOUND, AUTH_DENIED, AUTH_GRANTED */
   client = plugauth_client_new(config->url);
   plugauth_client_set_ignore_ssl(client, config->ignore_ssl);
-  
+
   if(client)
   {
     res = plugauth_client_auth(client, user, password);
