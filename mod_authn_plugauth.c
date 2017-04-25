@@ -108,7 +108,7 @@ static void *merge_dir_config(apr_pool_t *pool, void *BASE, void *ADD)
   return config;
 }
 
-module AP_MODULE_DECLARE_DATA plugauth_module =
+module AP_MODULE_DECLARE_DATA authn_plugauth_module =
 {
   STANDARD20_MODULE_STUFF,
   create_dir_config,   /* Per-directory configuration handler */
@@ -121,7 +121,7 @@ module AP_MODULE_DECLARE_DATA plugauth_module =
 
 static authn_status authn_plugauth_password(request_rec *r, const char *user, const char *password)
 {
-  plugauth_config *config = (plugauth_config*) ap_get_module_config(r->per_dir_config, &plugauth_module);
+  plugauth_config *config = (plugauth_config*) ap_get_module_config(r->per_dir_config, &authn_plugauth_module);
   plugauth_client_t *client;
   int res;
   int ret;

@@ -38,13 +38,13 @@ install : mod_authn_plugauth.so
 	mkdir -p $(DESTDIR)$(PREFIX)/lib/apache2/modules
 	install -m 755 mod_authn_plugauth.so $(DESTDIR)$(PREFIX)/lib/apache2/modules
 
-mod_authn_plugauth.spec : mod_authn_plugauth.spec.tmpl
-	env VERSION=$(VERSION) RELEASE=$$((`arpm -qa | grep mod_authn_plugauth | cut -d- -f3 | cut -d. -f1` + 1)) perl -pe 's/(VERSION|RELEASE)/$$ENV{$$1}/eg' mod_authn_plugauth.spec.tmpl > mod_authn_plugauth.spec
+acps-mod_authn_plugauth.spec : acps-mod_authn_plugauth.spec.tmpl
+	env VERSION=$(VERSION) RELEASE=$$((`arpm -qa | grep mod_authn_plugauth | cut -d- -f3 | cut -d. -f1` + 1)) perl -pe 's/(VERSION|RELEASE)/$$ENV{$$1}/eg' acps-mod_authn_plugauth.spec.tmpl > acps-mod_authn_plugauth.spec
 
-rpm : mod_authn_plugauth.spec mod_authn_plugauth-$(VERSION).tar.gz
+rpm : acps-mod_authn_plugauth.spec mod_authn_plugauth-$(VERSION).tar.gz
 	mkdir -p ~/rpmbuild/SOURCES
 	cp -a mod_authn_plugauth-$(VERSION).tar.gz ~/rpmbuild/SOURCES
-	rpmbuild -bb mod_authn_plugauth.spec
+	rpmbuild -bb acps-mod_authn_plugauth.spec
 
 distclean: clean
 	rm -f httpd/var/log/*.log
