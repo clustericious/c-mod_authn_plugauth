@@ -8,6 +8,10 @@ URL: https://github.com/plicease/mod_authn_plugauth
 Source0: mod_authn_plugauth-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-BUILD
 
+%global _enable_debug_package 0
+%global debug_package %{nil}
+%global __os_install_post /usr/lib/rpm/brp-compress %{nil}
+
 %description
 PlugAuth apache module
 
